@@ -53,6 +53,7 @@ def checkForQuit():
 
 
 def start(fen=''):
+    global gameboard
     pygame.init()
 
     # Setting up the GUI window.
