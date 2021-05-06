@@ -44,13 +44,18 @@ class Game:
         return uci
 
     def random_player(self, game_board):
-        move = random.choice(list(game_board.legal_moves))
-        # if chess.BaseBoard():
-        #     square = chess.square_name('F7')
-        #     print(square)
-            #chess.BaseBoard.piece_at(game_board, square)   # Working on displaying the peice that was moved wants self to be passed through but that causes error
-        print("AI Move: ",move)
-        return move.uci()
+        ai_move = random.choice(list(game_board.legal_moves))
+        move = str(ai_move)
+        start_pos, end_pos = move[::2], move[1::2]
+        print(start_pos, end_pos)
+        #print(move)
+        #square = chess.parse_square('e4')
+        #print(square)
+        if chess.BaseBoard():
+            piece = chess.BaseBoard.piece_at(chess.BaseBoard(),1)   # Working on displaying the peice that was moved wants self to be passed through but that causes error
+            print(piece)
+        return ai_move.uci()
+        
 
     def who(self, player):
         """ function for displaying the color of a player """
