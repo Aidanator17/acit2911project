@@ -5,9 +5,6 @@ import time
 from IPython.display import display, HTML, clear_output
 from chessboard import display
 
-# board class tracks whose turn it is, possbile moves, and history
-# also it is possibble to undo and redo moves and tracks repeating states
-#pygame.display.set_caption("Chess Game")
 
 class Game:
 
@@ -31,6 +28,7 @@ class Game:
         while uci not in legal_uci_moves:
             print("Legal moves: " + (",".join(sorted(legal_uci_moves))))
             uci = self.get_move("%s's move[q to quit]> " % self.who(game_board.turn))
+        self.move_txt(uci, game_board)
         return uci
 
     def get_move(self, prompt):
@@ -45,16 +43,19 @@ class Game:
 
     def random_player(self, game_board):
         ai_move = random.choice(list(game_board.legal_moves))
-        move = str(ai_move)
-        start_pos, end_pos = move[::2], move[1::2]
-        print(start_pos, end_pos)
-        #print(move)
-        #square = chess.parse_square('e4')
-        #print(square)
-        if chess.BaseBoard():
-            piece = chess.BaseBoard.piece_at(chess.BaseBoard(),1)   # Working on displaying the peice that was moved wants self to be passed through but that causes error
-            print(piece)
+        # move = str(ai_move)
+        # start_pos, end_pos = move[:len(move)//2], move[len(move)//2:]
+        self.move_txt(ai_move, game_board)
         return ai_move.uci()
+
+    def move_txt(self, move, game_board):
+        move = str(move)
+        start_pos, end_pos = move[:len(move)//2], move[len(move)//2:]
+        turn = self.who(game_board.turn)
+        square = chess.parse_square(start_pos)
+        if chess.BaseBoard():
+            piece = chess.BaseBoard.piece_at(chess.BaseBoard(), square)
+            print(f"{turn} has move {piece} from {start_pos} to {end_pos}")
         
 
     def who(self, player):
