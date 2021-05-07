@@ -12,18 +12,39 @@ from chessboard import display
 class Game:
 
     def __init__(self, player1, player2, option=False):
-        self.player1 = player1
-        self.player2 = player2
+        try:
+            int(player1)
+            self.player1 = player1
+        except:
+            print("Player can only be an integer (player_id)")
+            raise TypeError()
+
+        try:
+            int(player2)
+            self.player2 = player2
+        except:
+            print("Player can only be an integer (player_id)")
+            raise TypeError()     
+
+
         self.option = option
         self.player1 = input("Enter 1 for AI or 2 for self play: ")
+        self.mode=""
+
+
         if self.player1 == '1':
+            self.mode = "A"
             self.option = False
         elif self.player1 == '2':
+            self.mode = "B"
             self.option = True
         
-        self.play_game()
+        # self.play_game()
 
         #self.player2 = random_player
+
+
+
     def user(self, game_board):
         display.update(game_board.fen())
         uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
@@ -62,7 +83,7 @@ class Game:
         #     print("you can castle: BBH1")
         return display.update(game_board.fen())
 
-    def play_game(self, pause=0.1):
+    def play_game(self, pause=0.001):
         game_board = chess.Board()
         use_display = display.start(game_board.fen())
         try:
@@ -90,10 +111,10 @@ class Game:
             return (None, msg, game_board)
         result = None
         if game_board.is_check():
-            msg = "check: " + who(not game_board.turn)
+            msg = "check: " + self.who(not game_board.turn)
             print(msg)
         if game_board.is_checkmate():
-            msg = "checkmate: " + who(not game_board.turn) + " wins!"
+            msg = "checkmate: " + self.who(not game_board.turn) + " wins!"
             result = not game_board.turn
             print(msg)
         elif game_board.is_stalemate():
@@ -114,6 +135,6 @@ class Game:
 player1 = 0
 player2 = 1
 
-Game(player1, player2).play_game
-
+game_1 = Game(player1, player2)
+game_1.play_game()
 
