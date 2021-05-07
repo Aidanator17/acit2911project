@@ -9,6 +9,7 @@ from chessboard import display
 class Game:
 
     def __init__(self, player1, player2, option=False):
+        """ Initializing variables, and checking cases """
         try:
             int(player1)
             self.player1 = player1
@@ -29,7 +30,8 @@ class Game:
 
         
     def user(self, game_board):
-        display.update(game_board.fen())
+        """ if user plays the game it asks for its moves and checks if the move exists in the list of legal moves """
+        display.update(game_board.fen()) #updates the chess board 
         uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
         legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while uci not in legal_uci_moves:
@@ -49,13 +51,17 @@ class Game:
         return uci
 
     def random_player(self, game_board):
-        ai_move = random.choice(list(game_board.legal_moves))
-        # move = str(ai_move)
-        # start_pos, end_pos = move[:len(move)//2], move[len(move)//2:]
+        """ generates a random move based off of a list of legal moves """
+        ai_move = random.choice(list(game_board.legal_moves)) 
         self.move_txt(ai_move, game_board)
         return ai_move.uci()
 
     def move_txt(self, move, game_board):
+        """ 
+        takes the move made and splits it into two seperate strings and 
+        checks the square to figure out the piece in order to create a nice message indicating what 
+        happened in the turn 
+        """
         move = str(move)
         start_pos, end_pos = move[:len(move)//2], move[len(move)//2:]
         turn = self.who(game_board.turn)
@@ -66,16 +72,19 @@ class Game:
         
 
     def who(self, player):
-        """ function for displaying the color of a player """
+        """ whos turn is it """
+
         return "White" if player == chess.WHITE else "Black"
 
     def view_game(self, game_board, use_display):
-        """ function for displaying the board """
+        """ function for displaying/updating the board """
         # if bool(game_board.castling_rights):
         #     print("you can castle: BBH1")
         return display.update(game_board.fen())
 
     def play_game(self, pause=0.1):
+        """ Main function """
+        #checking if the user wishes to watch a game against two AIs or wishes to play
         self.player1 = input("Enter 1 for AI or 2 for self play: ")
         if self.player1 == '1':
             self.mode = "A"
@@ -86,6 +95,8 @@ class Game:
 
         game_board = chess.Board()
         use_display = display.start(game_board.fen())
+        
+        """ Main game loop """
         try:
             while not game_board.is_game_over(claim_draw=True):
                 if game_board.turn == chess.WHITE:
@@ -110,11 +121,13 @@ class Game:
             msg = "Game interrupted!"
             return (None, msg, game_board)
         result = None
+
+        # checking conditions
         if game_board.is_check():
-            msg = "check: " + who(not game_board.turn)
+            msg = "check: " + self.who(not game_board.turn)
             print(msg)
         if game_board.is_checkmate():
-            msg = "checkmate: " + who(not game_board.turn) + " wins!"
+            msg = "checkmate: " + self.who(not game_board.turn) + " wins!"
             result = not game_board.turn
             print(msg)
         elif game_board.is_stalemate():
