@@ -9,6 +9,7 @@ from chessboard import display
 class Game:
 
     def __init__(self, player1, player2, option=False):
+
         self.player1 = player1
         self.player2 = player2
         self.option = option
@@ -43,8 +44,6 @@ class Game:
 
     def random_player(self, game_board):
         ai_move = random.choice(list(game_board.legal_moves))
-        # move = str(ai_move)
-        # start_pos, end_pos = move[:len(move)//2], move[len(move)//2:]
         self.move_txt(ai_move, game_board)
         return ai_move.uci()
 
