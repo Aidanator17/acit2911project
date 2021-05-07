@@ -9,18 +9,25 @@ from chessboard import display
 class Game:
 
     def __init__(self, player1, player2, option=False):
-        self.player1 = player1
-        self.player2 = player2
-        self.option = option
-        self.player1 = input("Enter 1 for AI or 2 for self play: ")
-        if self.player1 == '1':
-            self.option = False
-        elif self.player1 == '2':
-            self.option = True
-        
-        self.play_game()
+        try:
+            int(player1)
+            self.player1 = player1
+        except:
+            print("Player can only be an integer (player_id)")
+            raise TypeError()
 
-        #self.player2 = random_player
+        try:
+            int(player2)
+            self.player2 = player2
+        except:
+            print("Player can only be an integer (player_id)")
+            raise TypeError() 
+
+
+        self.option = option
+        self.mode=""
+
+        
     def user(self, game_board):
         display.update(game_board.fen())
         uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
@@ -69,6 +76,14 @@ class Game:
         return display.update(game_board.fen())
 
     def play_game(self, pause=0.1):
+        self.player1 = input("Enter 1 for AI or 2 for self play: ")
+        if self.player1 == '1':
+            self.mode = "A"
+            self.option = False
+        elif self.player1 == '2':
+            self.mode = "B"
+            self.option = True
+
         game_board = chess.Board()
         use_display = display.start(game_board.fen())
         try:
@@ -117,9 +132,10 @@ class Game:
         if use_display is not None:
             print(msg)
         return (result, msg, game_board)
-player1 = 0
-player2 = 1
-
-Game(player1, player2).play_game
 
 
+if __name__ == "__main__":
+    player1 = 0
+    player2 = 1
+    game_1=Game(player1, player2)
+    game_1.play_game()
