@@ -43,17 +43,17 @@ def test_option(game_1):
 
 def test_user(game_1):
     assert hasattr(game_1, "user")
-    #still working
+    
 
 
 def test_get_move(game_1):
     assert hasattr(game_1, "get_move")
-    #still working
+   
 
 
 def test_random_player(game_1):
     assert hasattr(game_1, "random_player")
-    #still working  
+   
 
 def test_move_txt(game_1):
     assert hasattr(game_1, "move_txt")
@@ -61,12 +61,12 @@ def test_move_txt(game_1):
 
 def test_who(game_1):
     assert hasattr(game_1, "who")
-    #still working
+   
 
 
 def test_view_game(game_1):
     assert hasattr(game_1, "view_game")
-    #still working
+   
 
 
 
