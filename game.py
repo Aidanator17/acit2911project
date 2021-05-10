@@ -28,6 +28,22 @@ class Game:
         self.option = option
         self.mode=""
 
+    def translate_piece(self, opiece):
+        piece = str(opiece)
+        if piece.lower() == 'k':
+            return "king"
+        if piece.lower() == 'q':
+            return "queen"
+        if piece.lower() == 'p':
+            return "pawn"
+        if piece.lower() == 'r':
+            return "rook"
+        if piece.lower() == 'b':
+            return "bishop"
+        if piece.lower() == 'n':
+            return "knight"
+        else:
+            return "unknown"
         
     def user(self, game_board):
         """ if user plays the game it asks for its moves and checks if the move exists in the list of legal moves """
@@ -68,7 +84,17 @@ class Game:
         square = chess.parse_square(start_pos)
         if chess.BaseBoard():
             piece = chess.BaseBoard.piece_at(chess.BaseBoard(), square)
-            print(f"{turn} has move {piece} from {start_pos} to {end_pos}")
+            if self.option == True:
+                if turn == self.playerc:
+                    tmove = f"Player ({turn}) moved {self.translate_piece(piece)} from {start_pos} to {end_pos}"
+                    print(tmove)
+                    self.moves.append(tmove)
+                else:
+                    tmove = f"{turn} moved {self.translate_piece(piece)} from {start_pos} to {end_pos}"
+                    print(tmove)
+                    self.moves.append(tmove)
+            else:
+                print(f"{turn} moved {self.translate_piece(piece)} from {start_pos} to {end_pos}")
         
 
     def who(self, player):
@@ -86,12 +112,14 @@ class Game:
         """ Main function """
         #checking if the user wishes to watch a game against two AIs or wishes to play
         self.player1 = input("Enter 1 for AI or 2 for self play: ")
+        self.playerc = 'Black'
         if self.player1 == '1':
             self.mode = "A"
             self.option = False
         elif self.player1 == '2':
             self.mode = "B"
             self.option = True
+            self.moves = []
 
         game_board = chess.Board()
         use_display = display.start(game_board.fen())
@@ -101,6 +129,7 @@ class Game:
             while not game_board.is_game_over(claim_draw=True):
                 if game_board.turn == chess.WHITE:
                     if self.option == True:
+                        self.playerc = 'White'
                         uci = self.user(game_board)
                     else:
                         uci = self.random_player(game_board)
