@@ -1,12 +1,11 @@
 #DO NOT RUN
 
-from sqlalchemy import Table, Column, String, MetaData, create_engine, __version__, ARRAY
+from sqlalchemy import Table, Column, String, MetaData, create_engine, ARRAY
 import uuid
-print("Version:",__version__)
 
 def dbpush(pn,pc,aic,mov,win,plyd):
     engine = create_engine("postgresql://iuulkwuvvrdmxw:b53508be72378dc1e867c7b4155e7dab99eaf2ee92a4c5c18cb62bffbb6a0342@ec2-35-174-35-242.compute-1.amazonaws.com:5432/d4m4h0c2mu2o1u", echo=True, future=True)
-    metadata = MetaData()
+    metadata = MetaData(engine)
     matches = Table('matches', metadata,
         Column('match_id', String(500), primary_key=True),
         Column('playername', String(500)),
@@ -21,14 +20,3 @@ def dbpush(pn,pc,aic,mov,win,plyd):
     conn.execute(ins)
 
 dbpush('Aidan','White','Black',['white pawn from a2 to a4','black knight from b7 to d6'],'Aidan','2021-05-10 5:31PM')
-    
-    
-    
-    
-    
-# with engine.connect() as conn:
-#     conn.execute(
-#         sqlalchemy.text("INSERT INTO matches (x, y) VALUES (:x, :y)"),
-#         [{"x": 1, "y": 1}]
-#         )
-#     conn.commit()
