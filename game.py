@@ -96,10 +96,10 @@ class Game:
             return (None, msg, game_board)
         result = None
         if game_board.is_check():
-            msg = "check: " + who(not game_board.turn)
+            msg = "check: " + self.who(not game_board.turn)
             print(msg)
         if game_board.is_checkmate():
-            msg = "checkmate: " + who(not game_board.turn) + " wins!"
+            msg = "checkmate: " + self.who(not game_board.turn) + " wins!"
             result = not game_board.turn
             print(msg)
         elif game_board.is_stalemate():
