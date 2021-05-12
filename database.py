@@ -7,11 +7,7 @@ import re
 
 def dbpush(pn,pc,aic,mov,win,plyd):
 
-    uri = os.getenv("DATABASE_URL")
-    if uri.startswith("postgres://"):
-        uri = uri.replace("postgres://", "postgresql://", 1)
-
-    engine = create_engine(uri, echo=True, future=True)
+    engine = create_engine("postgresql://iuulkwuvvrdmxw:b53508be72378dc1e867c7b4155e7dab99eaf2ee92a4c5c18cb62bffbb6a0342@ec2-35-174-35-242.compute-1.amazonaws.com:5432/d4m4h0c2mu2o1u", echo=True)
     metadata = MetaData(engine)
 
     matches = Table('matches', metadata,
