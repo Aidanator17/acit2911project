@@ -5,6 +5,8 @@ import time
 from IPython.display import display, HTML, clear_output
 from chessboard import display
 
+from pynput.mouse import Listener
+
 
 class Game:
 
@@ -32,6 +34,10 @@ class Game:
         return uci
 
     def get_move(self, prompt):
+        """ get a move from the player """
+        #with statement for capturing the mouse and calles the given functions if true
+        with Listener(on_move = self.on_move, on_click = self.on_click, on_scroll = self.on_scroll) as listener:
+            listener.join()
         uci = input(prompt)
         if uci and uci[0] == "q":
             raise KeyboardInterrupt()
@@ -40,6 +46,17 @@ class Game:
         except:
             uci = None
         return uci
+
+    def on_move(self, x, y):
+        pass
+    
+    def on_click(self, x, y, button, pressed):
+        print("clicked")
+        return None
+    
+    def on_scroll(self, x, y, dx, dy):
+        pass
+
 
     def random_player(self, game_board):
         ai_move = random.choice(list(game_board.legal_moves))
