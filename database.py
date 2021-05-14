@@ -1,11 +1,11 @@
 #DO NOT RUN
-
+from env import uri
 from sqlalchemy import Table, Column, String, MetaData, create_engine, ARRAY
 import uuid
 
 def dbpush(pn,pc,aic,mov,win,plyd,tim):
 
-    engine = create_engine("postgresql://iuulkwuvvrdmxw:b53508be72378dc1e867c7b4155e7dab99eaf2ee92a4c5c18cb62bffbb6a0342@ec2-35-174-35-242.compute-1.amazonaws.com:5432/d4m4h0c2mu2o1u", echo=True)
+    engine = create_engine(uri(), echo=True)
     metadata = MetaData(engine)
 
     matches = Table('matches', metadata,
@@ -24,5 +24,6 @@ def dbpush(pn,pc,aic,mov,win,plyd,tim):
     conn = engine.connect()
     conn.execute(ins)
 
-# dbpush('Aidan','White','Black',['white pawn from a2 to a4','black knight from b7 to d6'],'player','2021-05-10 5:31PM','180')
-# dbpush('Aidan','Black','White',['white pawn from a2 to a4','black knight from b7 to d6'],'AI','2021-05-11 8:43PM','360')
+# dbpush(player Name, Player Color, AI Color, Move list, Winner ("player" or "AI"), Date Played, time (seconds))
+dbpush('Harman','White','Black',['white pawn from a2 to a4','black knight from b7 to d6'],'player','2021-05-10 5:31PM','180')
+dbpush('Peter','Black','White',['white pawn from a2 to a4','black knight from b7 to d6'],'AI','2021-05-11 8:43PM','360')
