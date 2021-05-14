@@ -30,7 +30,9 @@ class Game:
         display.update(game_board.fen())
         
         #getting the move from the function get_move()
-        uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
+        #uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
+        prompt = f"{self.who(game_board.turn)}'s move [q to quite]"
+        uci = self.get_move(prompt, game_board)
         legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while uci not in legal_uci_moves:
             print("Legal moves: " + (",".join(sorted(legal_uci_moves))))
@@ -38,18 +40,176 @@ class Game:
         self.move_txt(uci, game_board)
         return uci
 
-    def get_move(self, prompt):
+    def get_move(self, prompt, game_board):
         """ get a move from the player """
-        
-        #with statement for capturing the mouse and calles the given functions if true
-        # with Listener(on_move = self.on_move, on_click = self.on_click, on_scroll = self.on_scroll) as listener:
-        #     listener.join()
         test = True
         while test == True:
             ev = display.pygame.event.get()
+            pos_x, pos_y = display.pygame.mouse.get_pos()
             for event in ev:
                 if event.type == display.pygame.MOUSEBUTTONUP:
-                    print(display.pygame.mouse.get_pos())
+                    print(f'mouse {pos_x}, {pos_y}')
+                    
+                    # Checking position A
+                    if (pos_x > 100 ) and (pos_x < 148) and (pos_y > 100) and (pos_y < 498):
+                        if (pos_y > 100) and (pos_y < 150):
+                            print('a8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('a7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('a6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('a5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('a4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('a3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('a2')
+                        elif (pos_y > 450):
+                            print ('a1')
+                    
+                    # Checking position B
+                    if (pos_x > 150) and (pos_x < 198):
+                        if (pos_y > 100) and (pos_y < 150):
+                            print('b8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('b7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('b6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('b5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('b4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('b3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('b2')
+                        elif (pos_y > 450):
+                            print ('b1')
+
+                    #checking position C
+
+                    if(pos_x > 200) and (pos_x < 250):
+                        if (pos_y > 100) and (pos_y < 150):
+                            print('c8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('c7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('c6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('c5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('c4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('c3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('c2')
+                        elif (pos_y > 450):
+                            print ('c1')
+                    
+                    # Checking column D
+
+                    if (pos_x > 250) and (pos_x < 300):
+                        if (pos_y > 100) and (pos_y < 150):
+                            print('d8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('d7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('d6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('d5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('d4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('d3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('d2')
+                        elif (pos_y > 450):
+                            print ('d1')
+                    
+                    # Checking column E
+
+                    if (pos_x > 300) and (pos_x < 350):
+                        if (pos_y > 100) and (pos_y < 150):
+                            print('e8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('e7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('e6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('e5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('e4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('e3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('e2')
+                        elif (pos_y > 450):
+                            print ('e1')
+                        
+                    # Checking column F
+
+                    if (pos_x > 350) and (pos_x < 400):
+                        if (pos_y > 100) and (pos_y < 150):
+                                print('f8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('f7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('f6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('f5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('f4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('f3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('f2')
+                        elif (pos_y > 450):
+                            print ('f1')
+                    # Checking column G
+
+                    if (pos_x > 400) and (pos_x < 450):
+                        if (pos_y > 100) and (pos_y < 150):
+                            print('g8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('g7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('g6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('g5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('g4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('g3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('g2')
+                        elif (pos_y > 450):
+                            print ('g1')
+                    # Checking column H
+
+                    if (pos_x > 450) and (pos_x < 500):
+                        if (pos_y > 100) and (pos_y < 150):
+                            print('h8')
+                        elif (pos_y > 150) and (pos_y < 200):
+                            print('h7')
+                        elif (pos_y > 200) and (pos_y < 250):
+                            print('h6')
+                        elif (pos_y > 250) and (pos_y < 300):
+                            print('h5')
+                        elif (pos_y > 300) and (pos_y < 350):
+                            print('h4')
+                        elif (pos_y > 350) and (pos_y < 400):
+                            print('h3')
+                        elif (pos_y > 400) and (pos_y < 450):
+                            print('h2')
+                        elif (pos_y > 450):
+                            print ('h1')
+
+                 
+                    
+
+                    
         uci = input(prompt)
         if uci and uci[0] == "q":
             raise KeyboardInterrupt()
