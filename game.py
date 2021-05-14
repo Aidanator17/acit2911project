@@ -4,6 +4,12 @@ import random
 import time
 from IPython.display import display, HTML, clear_output
 from chessboard import display
+from database import dbpush #playernumber, playercolor, AIcolor, Movelist, Winner("Player" or "AI"), datePlayed, time(seconds)
+from sqlalchemy import Table, Column, String, MetaData, create_engine, ARRAY
+import uuid
+from datetime import date
+
+
 
 
 class Game:
@@ -27,6 +33,20 @@ class Game:
 
         self.option = option
         self.mode=""
+
+    def dbGame(self, game_board, starttime):
+        today = date.today()
+        d1 = today.strftime("%d/%m/%Y")
+        gametime = float(time.time()) - starttime
+        if self.who(not game_board.turn) == self.playerc:
+            winner = 'player'
+        else:
+            winner = 'AI'
+        if self.playerc == 'Black':
+            aic = 'White'
+        else:
+            aic = 'Black'
+        dbpush('Peter',self.playerc,aic,self.moves,winner,str(d1),round(gametime,1))
 
     def translate_piece(self, opiece):
         piece = str(opiece)
@@ -113,6 +133,7 @@ class Game:
         #checking if the user wishes to watch a game against two AIs or wishes to play
         self.player1 = input("Enter 1 for AI or 2 for self play: ")
         self.playerc = 'Black'
+        starttime = float(time.time())
         if self.player1 == '1':
             self.mode = "A"
             self.option = False
@@ -159,6 +180,8 @@ class Game:
             msg = "checkmate: " + self.who(not game_board.turn) + " wins!"
             result = not game_board.turn
             print(msg)
+            if self.option == True:
+                self.dbGame(game_board,starttime)
         elif game_board.is_stalemate():
             msg = "draw: stalemate"
             print(msg)

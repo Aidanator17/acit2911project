@@ -24,5 +24,5 @@ def dbpush(pn,pc,aic,mov,win,plyd,tim):
     conn = engine.connect()
     conn.execute(ins)
 
-dbpush('Aidan','White','Black',['white pawn from a2 to a4','black knight from b7 to d6'],'player','2021-05-10 5:31PM','180')
-dbpush('Aidan','Black','White',['white pawn from a2 to a4','black knight from b7 to d6'],'AI','2021-05-11 8:43PM','360')
+# dbpush('Aidan','White','Black',['white pawn from a2 to a4','black knight from b7 to d6'],'player','2021-05-10 5:31PM','180')
+# dbpush('Aidan','Black','White',['white pawn from a2 to a4','black knight from b7 to d6'],'AI','2021-05-11 8:43PM','360')
