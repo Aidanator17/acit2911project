@@ -24,7 +24,12 @@ class Game:
 
         #self.player2 = random_player
     def user(self, game_board):
+        """ 
+        User function: updates the game board, and requests a move from the playe, and checks that move to a list of the legal moves to makes sure that it is a valid move. 
+        """
         display.update(game_board.fen())
+        
+        #getting the move from the function get_move()
         uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
         legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while uci not in legal_uci_moves:
@@ -35,9 +40,16 @@ class Game:
 
     def get_move(self, prompt):
         """ get a move from the player """
+        
         #with statement for capturing the mouse and calles the given functions if true
-        with Listener(on_move = self.on_move, on_click = self.on_click, on_scroll = self.on_scroll) as listener:
-            listener.join()
+        # with Listener(on_move = self.on_move, on_click = self.on_click, on_scroll = self.on_scroll) as listener:
+        #     listener.join()
+        test = True
+        while test == True:
+            ev = display.pygame.event.get()
+            for event in ev:
+                if event.type == display.pygame.MOUSEBUTTONUP:
+                    print(display.pygame.mouse.get_pos())
         uci = input(prompt)
         if uci and uci[0] == "q":
             raise KeyboardInterrupt()
@@ -48,24 +60,32 @@ class Game:
         return uci
 
     def on_move(self, x, y):
+        """ 
+        function for mouse movement that will capture the x, and y position
+        """
         pass
     
     def on_click(self, x, y, button, pressed):
-        print("clicked")
-        return None
+        """ captures the mouse click """
+        print('Click')
     
     def on_scroll(self, x, y, dx, dy):
         pass
 
 
     def random_player(self, game_board):
+        """ 
+        AI function; takes a list of legal moves and makes a random choice. based off of that move it will split it in two in order to create a nice message that will tell the player which move was just made
+        """
         ai_move = random.choice(list(game_board.legal_moves))
-        # move = str(ai_move)
-        # start_pos, end_pos = move[:len(move)//2], move[len(move)//2:]
         self.move_txt(ai_move, game_board)
+        
         return ai_move.uci()
 
     def move_txt(self, move, game_board):
+        """ 
+        function for indicating which move was just made. takes the move and splits it into two and takes the starting position and passes it into the chessboard to parse which square it was from, and then based off of that square parses which peices was on there
+        """ 
         move = str(move)
         start_pos, end_pos = move[:len(move)//2], move[len(move)//2:]
         turn = self.who(game_board.turn)
@@ -88,6 +108,8 @@ class Game:
     def play_game(self, pause=0.1):
         game_board = chess.Board()
         use_display = display.start(game_board.fen())
+        
+        
         try:
             while not game_board.is_game_over(claim_draw=True):
                 if game_board.turn == chess.WHITE:
