@@ -32,7 +32,7 @@ class Game:
         #getting the move from the function get_move()
         #uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
         prompt = f"{self.who(game_board.turn)}'s move [q to quite]"
-        uci = self.get_move(prompt, game_board)
+        uci = self.get_move(prompt)
         legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while uci not in legal_uci_moves:
             print("Legal moves: " + (",".join(sorted(legal_uci_moves))))
@@ -40,10 +40,10 @@ class Game:
         self.move_txt(uci, game_board)
         return uci
 
-    def get_move(self, prompt, game_board):
+    def get_move(self, prompt):
         """ get a move from the player """
-        test = True
-        while test == True:
+        selections = []
+        while len(selections) < 2:
             ev = display.pygame.event.get()
             pos_x, pos_y = display.pygame.mouse.get_pos()
             for event in ev:
@@ -53,171 +53,173 @@ class Game:
                     # Checking position A
                     if (pos_x > 100 ) and (pos_x < 148) and (pos_y > 100) and (pos_y < 498):
                         if (pos_y > 100) and (pos_y < 150):
-                            print('a8')
+                            selections.append('a8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('a7')
+                            selections.append('a7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('a6')
+                            selections.append('a6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('a5')
+                            selections.append('a5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('a4')
+                            selections.append('a4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('a3')
+                            selections.append('a3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('a2')
+                            selections.append('a2')
                         elif (pos_y > 450):
-                            print ('a1')
+                            selections.append ('a1')
                     
                     # Checking position B
                     if (pos_x > 150) and (pos_x < 198):
                         if (pos_y > 100) and (pos_y < 150):
-                            print('b8')
+                            selections.append('b8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('b7')
+                            selections.append('b7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('b6')
+                            selections.append('b6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('b5')
+                            selections.append('b5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('b4')
+                            selections.append('b4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('b3')
+                            selections.append('b3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('b2')
+                            selections.append('b2')
                         elif (pos_y > 450):
-                            print ('b1')
+                            selections.append ('b1')
 
                     #checking position C
 
                     if(pos_x > 200) and (pos_x < 250):
                         if (pos_y > 100) and (pos_y < 150):
-                            print('c8')
+                            selections.append('c8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('c7')
+                            selections.append('c7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('c6')
+                            selections.append('c6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('c5')
+                            selections.append('c5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('c4')
+                            selections.append('c4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('c3')
+                            selections.append('c3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('c2')
+                            selections.append('c2')
                         elif (pos_y > 450):
-                            print ('c1')
+                            selections.append ('c1')
                     
                     # Checking column D
 
                     if (pos_x > 250) and (pos_x < 300):
                         if (pos_y > 100) and (pos_y < 150):
-                            print('d8')
+                            selections.append('d8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('d7')
+                            selections.append('d7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('d6')
+                            selections.append('d6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('d5')
+                            selections.append('d5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('d4')
+                            selections.append('d4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('d3')
+                            selections.append('d3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('d2')
+                            selections.append('d2')
                         elif (pos_y > 450):
-                            print ('d1')
+                            selections.append ('d1')
                     
                     # Checking column E
 
                     if (pos_x > 300) and (pos_x < 350):
                         if (pos_y > 100) and (pos_y < 150):
-                            print('e8')
+                            selections.append('e8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('e7')
+                            selections.append('e7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('e6')
+                            selections.append('e6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('e5')
+                            selections.append('e5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('e4')
+                            selections.append('e4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('e3')
+                            selections.append('e3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('e2')
+                            selections.append('e2')
                         elif (pos_y > 450):
-                            print ('e1')
+                            selections.append ('e1')
                         
                     # Checking column F
 
                     if (pos_x > 350) and (pos_x < 400):
                         if (pos_y > 100) and (pos_y < 150):
-                                print('f8')
+                                selections.append('f8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('f7')
+                            selections.append('f7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('f6')
+                            selections.append('f6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('f5')
+                            selections.append('f5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('f4')
+                            selections.append('f4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('f3')
+                            selections.append('f3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('f2')
+                            selections.append('f2')
                         elif (pos_y > 450):
-                            print ('f1')
+                            selections.append ('f1')
                     # Checking column G
 
                     if (pos_x > 400) and (pos_x < 450):
                         if (pos_y > 100) and (pos_y < 150):
-                            print('g8')
+                            selections.append('g8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('g7')
+                            selections.append('g7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('g6')
+                            selections.append('g6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('g5')
+                            selections.append('g5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('g4')
+                            selections.append('g4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('g3')
+                            selections.append('g3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('g2')
+                            selections.append('g2')
                         elif (pos_y > 450):
-                            print ('g1')
+                            selections.append ('g1')
                     # Checking column H
 
                     if (pos_x > 450) and (pos_x < 500):
                         if (pos_y > 100) and (pos_y < 150):
-                            print('h8')
+                            selections.append('h8')
                         elif (pos_y > 150) and (pos_y < 200):
-                            print('h7')
+                            selections.append('h7')
                         elif (pos_y > 200) and (pos_y < 250):
-                            print('h6')
+                            selections.append('h6')
                         elif (pos_y > 250) and (pos_y < 300):
-                            print('h5')
+                            selections.append('h5')
                         elif (pos_y > 300) and (pos_y < 350):
-                            print('h4')
+                            selections.append('h4')
                         elif (pos_y > 350) and (pos_y < 400):
-                            print('h3')
+                            selections.append('h3')
                         elif (pos_y > 400) and (pos_y < 450):
-                            print('h2')
+                            selections.append('h2')
                         elif (pos_y > 450):
-                            print ('h1')
+                            selections.append ('h1')
 
                  
                     
 
                     
-        uci = input(prompt)
-        if uci and uci[0] == "q":
-            raise KeyboardInterrupt()
+        #uci = input(prompt)
+        t_uci = selections[0] + selections[1]
+        print(t_uci)
+        #if uci and uci[0] == "q":
+         #   raise KeyboardInterrupt()
         try:
-            chess.Move.from_uci(uci)
+            chess.Move.from_uci(t_uci)
         except:
-            uci = None
-        return uci
+            t_uci = None
+        return t_uci
 
     def on_move(self, x, y):
         """ 
