@@ -3,7 +3,7 @@ import pygame
 import random
 import time
 from IPython.display import display, HTML, clear_output
-from chessboard import display
+from module import display
 
 from pynput.mouse import Listener
 
