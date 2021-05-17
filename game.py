@@ -221,20 +221,6 @@ class Game:
             t_uci = None
         return t_uci
 
-    def on_move(self, x, y):
-        """ 
-        function for mouse movement that will capture the x, and y position
-        """
-        pass
-    
-    def on_click(self, x, y, button, pressed):
-        """ captures the mouse click """
-        print('Click')
-    
-    def on_scroll(self, x, y, dx, dy):
-        pass
-
-
     def random_player(self, game_board):
         """ 
         AI function; takes a list of legal moves and makes a random choice. based off of that move it will split it in two in order to create a nice message that will tell the player which move was just made
@@ -255,8 +241,8 @@ class Game:
         if chess.BaseBoard():
             piece = chess.BaseBoard.piece_at(chess.BaseBoard(), square)
             print(f"{turn} has move {piece} from {start_pos} to {end_pos}")
-        
-
+            display.message(turn, piece, start_pos, end_pos)
+            time.sleep(3)
     def who(self, player):
         """ function for displaying the color of a player """
         return "White" if player == chess.WHITE else "Black"

@@ -31,11 +31,9 @@ BGCOLOR = colors['Brown']
 
 WINDOWWIDTH, WINDOWHEIGHT = 600, 600
 
-
-
 BASICFONTSIZE = 30
 
-
+DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 def terminate():
     pygame.quit()
     sys.exit()
@@ -55,11 +53,14 @@ def checkForQuit():
 def start(fen=''):
     global gameboard
     pygame.init()
+    pygame.font.init()
 
     # Setting up the GUI window.
-    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Chess')
     BASICFONT = pygame.font.SysFont('calibri', BASICFONTSIZE)
+    font = pygame.font.SysFont('calibri', 60)
+    msg = False
+
     checkForQuit()
 
     # DISPLAYSURF.fill(BGCOLOR)
@@ -76,6 +77,21 @@ def start(fen=''):
     
     pygame.display.update()
     FPSCLOCK.tick(FPS)
+def message(turn, piece, start_pos, end_pos):
+    font = pygame.font.SysFont('calibri', 30)
+    message = font.render(f"{turn} has move {piece} from {start_pos} to {end_pos}", True, (0, 0, 0))
+    surf = pygame.Surface(message.get_size()).convert_alpha()
+    surf.fill((0, 0, 0, 80))
+    message.blit(surf, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+    #DISPLAYSURF.blit(message, (WINDOWWIDTH//2, 50))
+    textRect = message.get_rect()
+    textRect.center = (WINDOWWIDTH//2, WINDOWHEIGHT//2)
+    surf = pygame.Surface(message.get_size()).convert_alpha()
+    surf.fill((0, 0, 0, 80))
+    DISPLAYSURF.blit(message, textRect)
+    pygame.display.update()
+
+    # DISPLAYSURF(message, (100, 100))
 
 def update(fen):
     checkForQuit()
@@ -83,3 +99,5 @@ def update(fen):
     gameboard.updatePieces(fen)    
     pygame.display.update()
     FPSCLOCK.tick(FPS)
+
+
