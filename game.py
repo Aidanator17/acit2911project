@@ -4,10 +4,6 @@ import random
 import time
 from IPython.display import display, HTML, clear_output
 from module import display
-from database import dbpush #playernumber, playercolor, AIcolor, Movelist, Winner("Player" or "AI"), datePlayed, time(seconds)
-from sqlalchemy import Table, Column, String, MetaData, create_engine, ARRAY
-import uuid
-from datetime import datetime
 
 from pynput.mouse import Listener
 
@@ -18,7 +14,6 @@ class Game:
         self.player1 = player1
         self.player2 = player2
         self.option = option
-        self.moves = []
         self.player1 = input("Enter 1 for AI or 2 for self play: ")
         if self.player1 == '1':
             self.option = False
@@ -36,7 +31,7 @@ class Game:
         
         #getting the move from the function get_move()
         #uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
-        prompt = f"{self.who(game_board.turn)}'s move [q to quit]"
+        prompt = f"{self.who(game_board.turn)}'s move [q to quite]"
         uci = self.get_move(prompt)
         legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while uci not in legal_uci_moves:
@@ -44,36 +39,6 @@ class Game:
             uci = self.get_move("%s's move[q to quit]> " % self.who(game_board.turn))
         self.move_txt(uci, game_board)
         return uci
-
-    def dbGame(self, game_board, starttime):
-        d1 = str(datetime.now().strftime("%Y-%m-%d %H:%M"))
-        gametime = float(time.time()) - starttime
-        if self.who(not game_board.turn) == self.playerc:
-            winner = 'player'
-        else:
-            winner = 'AI'
-        if self.playerc == 'Black':
-            aic = 'White'
-        else:
-            aic = 'Black'
-        dbpush('Peter',self.playerc,aic,self.moves,winner,d1,round(gametime,1))
-    
-    def translate_piece(self, opiece):
-        piece = str(opiece)
-        if piece.lower() == 'k':
-            return "king"
-        if piece.lower() == 'q':
-            return "queen"
-        if piece.lower() == 'p':
-            return "pawn"
-        if piece.lower() == 'r':
-            return "rook"
-        if piece.lower() == 'b':
-            return "bishop"
-        if piece.lower() == 'n':
-            return "knight"
-        else:
-            return "unknown"
 
     def get_move(self, prompt):
         """ get a move from the player """
@@ -256,20 +221,6 @@ class Game:
             t_uci = None
         return t_uci
 
-    def on_move(self, x, y):
-        """ 
-        function for mouse movement that will capture the x, and y position
-        """
-        pass
-    
-    def on_click(self, x, y, button, pressed):
-        """ captures the mouse click """
-        print('Click')
-    
-    def on_scroll(self, x, y, dx, dy):
-        pass
-
-
     def random_player(self, game_board):
         """ 
         AI function; takes a list of legal moves and makes a random choice. based off of that move it will split it in two in order to create a nice message that will tell the player which move was just made
@@ -289,19 +240,9 @@ class Game:
         square = chess.parse_square(start_pos)
         if chess.BaseBoard():
             piece = chess.BaseBoard.piece_at(chess.BaseBoard(), square)
-            if self.option == True:
-                if turn == self.playerc:
-                    tmove = f"Player ({turn}) moved {self.translate_piece(piece)} from {start_pos} to {end_pos}"
-                    print(tmove)
-                    self.moves.append(tmove)
-                else:
-                    tmove = f"{turn} moved {self.translate_piece(piece)} from {start_pos} to {end_pos}"
-                    print(tmove)
-                    self.moves.append(tmove)
-            else:
-                print(f"{turn} moved {self.translate_piece(piece)} from {start_pos} to {end_pos}")
-        
-
+            print(f"{turn} has move {piece} from {start_pos} to {end_pos}")
+            display.message(turn, piece, start_pos, end_pos)
+            time.sleep(1)
     def who(self, player):
         """ function for displaying the color of a player """
         return "White" if player == chess.WHITE else "Black"
@@ -315,8 +256,8 @@ class Game:
     def play_game(self, pause=0.1):
         game_board = chess.Board()
         use_display = display.start(game_board.fen())
-        starttime = float(time.time())
-        self.playerc = 'White'
+        
+        
         try:
             while not game_board.is_game_over(claim_draw=True):
                 if game_board.turn == chess.WHITE:
@@ -348,8 +289,6 @@ class Game:
             msg = "checkmate: " + self.who(not game_board.turn) + " wins!"
             result = not game_board.turn
             print(msg)
-            if self.option == True:
-                self.dbGame(game_board,starttime)
         elif game_board.is_stalemate():
             msg = "draw: stalemate"
             print(msg)
