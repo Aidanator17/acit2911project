@@ -300,7 +300,7 @@ class Game:
                     self.moves.append(tmove)
             else:
                 print(f"{turn} moved {self.translate_piece(piece)} from {start_pos} to {end_pos}")
-        
+            time.sleep(1)
 
     def who(self, player):
         """ function for displaying the color of a player """
@@ -317,6 +317,7 @@ class Game:
         use_display = display.start(game_board.fen())
         starttime = float(time.time())
         self.playerc = 'White'
+        
         try:
             while not game_board.is_game_over(claim_draw=True):
                 if game_board.turn == chess.WHITE:
