@@ -242,7 +242,7 @@ class Game:
             piece = chess.BaseBoard.piece_at(chess.BaseBoard(), square)
             print(f"{turn} has move {piece} from {start_pos} to {end_pos}")
             display.message(turn, piece, start_pos, end_pos)
-            time.sleep(1)
+
     def who(self, player):
         """ function for displaying the color of a player """
         return "White" if player == chess.WHITE else "Black"
@@ -278,6 +278,7 @@ class Game:
                     display(HTML(html))
                     if use_display:
                         time.sleep(pause)
+                display.update(game_board.fen())
         except KeyboardInterrupt:
             msg = "Game interrupted!"
             return (None, msg, game_board)
