@@ -32,7 +32,7 @@ class Game:
         #getting the move from the function get_move()
         #uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
         prompt = f"{self.who(game_board.turn)}'s move [q to quite]"
-        uci = self.get_move(prompt)
+        uci = self.get_move(prompt, game_board)
         legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while uci not in legal_uci_moves:
             print("Legal moves: " + (",".join(sorted(legal_uci_moves))))
@@ -40,9 +40,11 @@ class Game:
         self.move_txt(uci, game_board)
         return uci
 
-    def get_move(self, prompt):
+    def get_move(self, prompt, game_board):
         """ get a move from the player """
         selections = []
+        valid_moves = []
+        legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while len(selections) < 2:
             ev = display.pygame.event.get()
             pos_x, pos_y = display.pygame.mouse.get_pos()
@@ -208,8 +210,10 @@ class Game:
 
                  
                     
-
-                    
+        # if len(selections) > 0:
+        #     square = chess.parse_square(selections[1])
+        #     valid_move = chess.Board.find_move(square)
+        #     print(valid_move)
         #uci = input(prompt)
         t_uci = selections[0] + selections[1]
         print(t_uci)
