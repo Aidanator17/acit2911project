@@ -1,0 +1,16 @@
+    def translate_piece(self, opiece):
+        piece = str(opiece)
+        if piece.lower() == 'k':
+            return "king"
+        if piece.lower() == 'q':
+            return "queen"
+        if piece.lower() == 'p':
+            return "pawn"
+        if piece.lower() == 'r':
+            return "rook"
+        if piece.lower() == 'b':
+            return "bishop"
+        if piece.lower() == 'n':
+            return "knight"
+        else:
+            return "unknown"
