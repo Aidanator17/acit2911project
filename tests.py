@@ -39,37 +39,44 @@ def test_option(game_1):
         assert game_1.option == False
     elif game_1.mode == "B":
         assert game_1.option == False
+    
+def test_translate_piece(game_1):
+    assert game_1.translate_piece("k") == "king"
+
+    assert game_1.translate_piece("q") == "queen"
+    
+    assert game_1.translate_piece("p") == "pawn"
+
+    assert game_1.translate_piece("r") == "rook"
+
+    assert game_1.translate_piece("b") == "bishop"
+
+    assert game_1.translate_piece("n") == "knight"
+
+    assert game_1.translate_piece("g") == "unknown"
+
+    assert game_1.translate_piece("5") == "unknown"
+
+    
 
 
 def test_user(game_1):
     assert hasattr(game_1, "user")
-    
-
 
 def test_get_move(game_1):
     assert hasattr(game_1, "get_move")
-   
-
 
 def test_random_player(game_1):
-    assert hasattr(game_1, "random_player")
-   
+    assert hasattr(game_1, "random_player") 
 
 def test_move_txt(game_1):
     assert hasattr(game_1, "move_txt")
 
-
 def test_who(game_1):
     assert hasattr(game_1, "who")
-   
-
 
 def test_view_game(game_1):
     assert hasattr(game_1, "view_game")
    
-
-
-
 def test_play_game(game_1):
     assert hasattr(game_1, "play_game")
-    
