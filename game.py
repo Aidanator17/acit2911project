@@ -29,14 +29,15 @@ class Game:
         """
         display.update(game_board.fen())
         
-        #getting the move from the function get_move()
-        #uci = self.get_move("%s's move [q to quite]> " % self.who(game_board.turn))
         prompt = f"{self.who(game_board.turn)}'s move [q to quite]"
         uci = self.get_move(prompt)
         legal_uci_moves = [move.uci() for move in game_board.legal_moves]
         while uci not in legal_uci_moves:
             print("Legal moves: " + (",".join(sorted(legal_uci_moves))))
+            inv_move = "Invalid Move"
+            display.invalid_move(inv_move)
             uci = self.get_move("%s's move[q to quit]> " % self.who(game_board.turn))
+            display.update(game_board.fen())
         self.move_txt(uci, game_board)
         return uci
 
