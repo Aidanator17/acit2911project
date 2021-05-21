@@ -69,10 +69,6 @@ class Board:
                     elif self.isEven(j):
                         self.DISPLAYSURF.blit(Board.wtile, Board.boardRect[i-1][j-1])
 
-    def valid_moves(self, valid):
-        pass
-        # for i in valid:
-        #     print('i')
 
     def isOdd(self, number):
         if number % 2 == 1:
