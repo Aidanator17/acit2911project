@@ -33,7 +33,7 @@ WINDOWWIDTH, WINDOWHEIGHT = 600, 600
 
 BASICFONTSIZE = 30
 
-DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+# DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 def terminate():
     pygame.quit()
     sys.exit()
@@ -66,8 +66,8 @@ def start(fen=''):
     # DISPLAYSURF.fill(BGCOLOR)
 
     # Setting the background image here
-    DISPLAYSURF.blit(background_image, [0, 0])
-    gameboard = board.Board(colors, BGCOLOR, DISPLAYSURF)
+    # DISPLAYSURF.blit(background_image, [0, 0])
+    # gameboard = board.Board(colors, BGCOLOR, DISPLAYSURF)
     gameboard.displayBoard()
 
     if (fen):
@@ -88,7 +88,7 @@ def message(turn, piece, start_pos, end_pos):
     textRect.center = (WINDOWWIDTH//2, WINDOWHEIGHT//2)
     surf = pygame.Surface(message.get_size()).convert_alpha()
     surf.fill((0, 0, 0, .08))
-    DISPLAYSURF.blit(message, textRect)
+    # DISPLAYSURF.blit(message, textRect)
     pygame.display.update()
 
     # DISPLAYSURF(message, (100, 100))
