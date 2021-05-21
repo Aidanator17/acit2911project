@@ -70,5 +70,5 @@ def test_view_game(game_1):
 
 
 
-# def test_play_game(game_1):
-#     assert hasattr(game_1, "play_game")
+def test_play_game(game_1):
+    assert hasattr(game_1, "play_game")
