@@ -9,6 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_DIR = os.path.join(BASE_DIR, 'images')
 
 background_image = pygame.image.load(os.path.join(IMAGE_DIR, 'park2.png'))
+os.environ['SDL_VIDEODRIVER'] = 'dummy'
 
 os.environ['SDL_VIDEO_CENTERED'] = '1' # Centre display window.
 
