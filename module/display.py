@@ -2,6 +2,7 @@ import os
 import sys
 import pygame
 from pygame.locals import *
+os.environ['SDL_VIDEODRIVER']='windib'
 
 from . import board
 
