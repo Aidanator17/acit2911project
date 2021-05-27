@@ -64,7 +64,8 @@ class Game:
             aic = 'White'
         else:
             aic = 'Black'
-        dbpush('Peter',self.playerc,aic,self.moves,winner,d1,round(gametime,1))
+        name = input('Please enter your name: ')
+        dbpush(name,self.playerc,aic,self.moves,winner,d1,round(gametime,1))
     
     def translate_piece(self, opiece):
         piece = str(opiece)
@@ -294,6 +295,7 @@ class Game:
                     self.moves.append(tmove)
             else:
                 print(f"{turn} moved {self.translate_piece(piece)} from {start_pos} to {end_pos}")
+            display.message(turn, piece, start_pos, end_pos)
             time.sleep(1)
 
     def who(self, player):
