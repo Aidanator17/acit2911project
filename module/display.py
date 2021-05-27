@@ -2,7 +2,7 @@ import os
 import sys
 import pygame
 from pygame.locals import *
-
+import time
 from . import board
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +33,8 @@ BGCOLOR = colors['Brown']
 WINDOWWIDTH, WINDOWHEIGHT = 600, 600
 
 BASICFONTSIZE = 30
+
+MOVE_CAPTION = []
 
 DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 def terminate():
@@ -80,24 +82,45 @@ def start(fen=''):
     FPSCLOCK.tick(FPS)
 def message(turn, piece, start_pos, end_pos):
     font = pygame.font.SysFont('calibri', 30)
-    message = font.render(f"{turn} has move {piece} from {start_pos} to {end_pos}", True, (0, 0, 0))
-    surf = pygame.Surface(message.get_size()).convert_alpha()
-    surf.fill((0, 0, 0, 80))
-    message.blit(surf, (WINDOWWIDTH//2, WINDOWHEIGHT//2), special_flags=pygame.BLEND_RGBA_MULT)
-    #DISPLAYSURF.blit(message, (WINDOWWIDTH//2, 50))
-    textRect = message.get_rect()
-    textRect.center = (WINDOWWIDTH//2, WINDOWHEIGHT//2)
-    surf = pygame.Surface(message.get_size()).convert_alpha()
-    surf.fill((0, 0, 0, .08))
-    DISPLAYSURF.blit(message, textRect)
-    pygame.display.update()
+    message = font.render(f"{turn} has move {piece} from {start_pos} to {end_pos}", True, (184, 134, 11))
+
+    clock = pygame.time.Clock()
+    msg_surf = message.copy()
+    alpha = 255
+    timer = 10
+    while alpha > 0:
+        if timer > 0:
+            timer -= 1
+        else:
+            if alpha > 0:
+                # print(f'timer {timer}, alpha {alpha}')
+                alpha = max(0, alpha-4)
+                msg_surf = message.copy()
+                msg_surf.fill((184, 134, 11, alpha), special_flags=pygame.BLEND_RGBA_MULT)
+
+        #DISPLAYSURF.fill((30, 30, 30))
+        #while timer > 0:
+
+        DISPLAYSURF.blit(msg_surf, (WINDOWWIDTH/2 - msg_surf.get_width()/2, WINDOWHEIGHT//2))
+        clock.tick(30)
+        time = 20
+        pygame.display.update()
 
     # DISPLAYSURF(message, (100, 100))
 
+def invalid_move(inv_msg):
+    """ Message for invalid move """
+    font = pygame.font.SysFont('calibri', 35)
+    message = font.render(inv_msg, True, (184, 134, 11))
+    
+    DISPLAYSURF.blit(message, (WINDOWWIDTH/2 - message.get_width()/2, WINDOWHEIGHT//2))
+    pygame.display.update()
+
 def update(fen):
     checkForQuit()
+    DISPLAYSURF.blit(background_image, [0, 0])
     gameboard.displayBoard()
-    gameboard.updatePieces(fen)    
+    gameboard.updatePieces(fen) 
     pygame.display.update()
     FPSCLOCK.tick(FPS)
 
