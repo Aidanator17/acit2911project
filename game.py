@@ -287,6 +287,7 @@ class Game:
         if game_board.is_check():
             msg = "check: " + self.who(not game_board.turn)
             print(msg)
+
         if game_board.is_checkmate():
             msg = "checkmate: " + self.who(not game_board.turn) + " wins!"
             result = not game_board.turn
@@ -306,6 +307,8 @@ class Game:
         if use_display is not None:
             print(msg)
         return (result, msg, game_board)
+
+    
 player1 = 0
 player2 = 1
 
