@@ -81,40 +81,56 @@ def start(fen=''):
     pygame.display.update()
     FPSCLOCK.tick(FPS)
 def message(turn, piece, start_pos, end_pos):
-    font = pygame.font.SysFont('calibri', 30)
-    message = font.render(f"{turn} has move {piece} from {start_pos} to {end_pos}", True, (184, 134, 11))
+    font = pygame.font.SysFont('papyrus', 38, bold=True)
+    message = font.render(f"{turn} has move {piece} from {start_pos} to {end_pos}", True, (199, 133, 66))
+    # print(pygame.font.get_fonts())
 
-    clock = pygame.time.Clock()
+    # clock = pygame.time.Clock()
     msg_surf = message.copy()
-    alpha = 255
-    timer = 10
-    while alpha > 0:
-        if timer > 0:
-            timer -= 1
-        else:
-            if alpha > 0:
+    # alpha = 255
+    # timer = 10
+    # while alpha > 200:
+    #     if timer > 0:
+    #         timer -= 1
+    #     else:
+    #         if alpha > 200:
                 # print(f'timer {timer}, alpha {alpha}')
-                alpha = max(0, alpha-4)
-                msg_surf = message.copy()
-                msg_surf.fill((184, 134, 11, alpha), special_flags=pygame.BLEND_RGBA_MULT)
+                # alpha = max(200, alpha)
+    msg_surf = message.copy()
+    #msg_surf.fill((140, 93, 46)
 
         #DISPLAYSURF.fill((30, 30, 30))
         #while timer > 0:
 
-        DISPLAYSURF.blit(msg_surf, (WINDOWWIDTH/2 - msg_surf.get_width()/2, WINDOWHEIGHT//2))
-        clock.tick(30)
-        time = 20
-        pygame.display.update()
+    DISPLAYSURF.blit(msg_surf, (WINDOWWIDTH/2 - msg_surf.get_width()/2, WINDOWHEIGHT/2 - msg_surf.get_height()))
+        #clock.tick(30)
+        #time = 20
+    pygame.display.update()
 
     # DISPLAYSURF(message, (100, 100))
 
 def invalid_move(inv_msg):
     """ Message for invalid move """
-    font = pygame.font.SysFont('calibri', 35)
-    message = font.render(inv_msg, True, (184, 134, 11))
+    font = pygame.font.SysFont('papyrus', 38, bold=True)
+    message = font.render(inv_msg, True, (199, 133, 66))
     
     DISPLAYSURF.blit(message, (WINDOWWIDTH/2 - message.get_width()/2, WINDOWHEIGHT//2))
     pygame.display.update()
+
+def indication(cord):
+    """ function to draw rectangle to indicate selected piece """
+    x = cord[0]
+    y = cord[1]
+    
+
+    print(x, y)
+        # pygame.draw.rect(DISPLAYSURF, pygame.Color(255, 255, 255, 128), pygame.Rect(x, y, 50, 50))
+    ind_surf = pygame.Surface((50, 50))
+    ind_surf.set_alpha(128)
+    ind_surf.fill((76, 230, 0))
+    DISPLAYSURF.blit(ind_surf, (x, y))
+    pygame.display.update()
+    return None
 
 def update(fen):
     checkForQuit()

@@ -48,6 +48,8 @@ class Game:
             print("Legal moves: " + (",".join(sorted(legal_uci_moves))))
             inv_move = "Invalid Move"
             display.invalid_move(inv_move)
+            time.sleep(2)
+            display.update(game_board.fen())
             uci = self.get_move("%s's move[q to quit]> " % self.who(game_board.turn))
             display.update(game_board.fen())
         self.move_txt(uci, game_board)
@@ -87,6 +89,8 @@ class Game:
     def get_move(self, prompt):
         """ get a move from the player """
         selections = []
+        cord = []
+        ind = True
         while len(selections) < 2:
             ev = display.pygame.event.get()
             pos_x, pos_y = display.pygame.mouse.get_pos()
@@ -98,159 +102,291 @@ class Game:
                     if (pos_x > 100 ) and (pos_x < 148) and (pos_y > 100) and (pos_y < 498):
                         if (pos_y > 100) and (pos_y < 150):
                             selections.append('a8')
+                            cord.append(100)
+                            cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('a7')
+                            cord.append(100)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('a6')
+                            cord.append(100)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('a5')
+                            cord.append(100)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('a4')
+                            cord.append(100)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('a3')
+                            cord.append(100)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('a2')
+                            cord.append(100)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('a1')
+                            cord.append(100)
+                            cord.append(450)
                     
                     # Checking position B
                     if (pos_x > 150) and (pos_x < 198):
                         if (pos_y > 100) and (pos_y < 150):
                             selections.append('b8')
+                            cord.append(150)
+                            cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('b7')
+                            cord.append(150)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('b6')
+                            cord.append(150)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('b5')
+                            cord.append(150)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('b4')
+                            cord.append(150)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('b3')
+                            cord.append(150)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('b2')
+                            cord.append(150)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('b1')
+                            cord.append(150)
+                            cord.append(450)
 
                     #checking position C
 
                     if(pos_x > 200) and (pos_x < 250):
                         if (pos_y > 100) and (pos_y < 150):
                             selections.append('c8')
+                            cord.append(200)
+                            cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('c7')
+                            cord.append(200)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('c6')
+                            cord.append(200)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('c5')
+                            cord.append(200)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('c4')
+                            cord.append(200)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('c3')
+                            cord.append(200)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('c2')
+                            cord.append(200)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('c1')
+                            cord.append(200)
+                            cord.append(450)
                     
                     # Checking column D
 
                     if (pos_x > 250) and (pos_x < 300):
                         if (pos_y > 100) and (pos_y < 150):
                             selections.append('d8')
+                            cord.append(250)
+                            cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('d7')
+                            cord.append(250)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('d6')
+                            cord.append(250)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('d5')
+                            cord.append(250)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('d4')
+                            cord.append(250)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('d3')
+                            cord.append(250)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('d2')
+                            cord.append(250)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('d1')
+                            cord.append(250)
+                            cord.append(450)
                     
                     # Checking column E
 
                     if (pos_x > 300) and (pos_x < 350):
                         if (pos_y > 100) and (pos_y < 150):
                             selections.append('e8')
+                            cord.append(300)
+                            cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('e7')
+                            cord.append(300)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('e6')
+                            cord.append(300)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('e5')
+                            cord.append(300)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('e4')
+                            cord.append(300)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('e3')
+                            cord.append(300)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('e2')
+                            cord.append(300)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('e1')
+                            cord.append(300)
+                            cord.append(450)
                         
                     # Checking column F
 
                     if (pos_x > 350) and (pos_x < 400):
                         if (pos_y > 100) and (pos_y < 150):
                                 selections.append('f8')
+                                cord.append(350)
+                                cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('f7')
+                            cord.append(350)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('f6')
+                            cord.append(350)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('f5')
+                            cord.append(350)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('f4')
+                            cord.append(350)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('f3')
+                            cord.append(350)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('f2')
+                            cord.append(350)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('f1')
+                            cord.append(350)
+                            cord.append(450)
                     # Checking column G
 
                     if (pos_x > 400) and (pos_x < 450):
                         if (pos_y > 100) and (pos_y < 150):
                             selections.append('g8')
+                            cord.append(400)
+                            cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('g7')
+                            cord.append(400)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('g6')
+                            cord.append(400)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('g5')
+                            cord.append(400)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('g4')
+                            cord.append(400)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('g3')
+                            cord.append(400)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('g2')
+                            cord.append(400)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('g1')
+                            cord.append(400)
+                            cord.append(450)
                     # Checking column H
 
                     if (pos_x > 450) and (pos_x < 500):
                         if (pos_y > 100) and (pos_y < 150):
                             selections.append('h8')
+                            cord.append(450)
+                            cord.append(100)
                         elif (pos_y > 150) and (pos_y < 200):
                             selections.append('h7')
+                            cord.append(450)
+                            cord.append(150)
                         elif (pos_y > 200) and (pos_y < 250):
                             selections.append('h6')
+                            cord.append(450)
+                            cord.append(200)
                         elif (pos_y > 250) and (pos_y < 300):
                             selections.append('h5')
+                            cord.append(450)
+                            cord.append(250)
                         elif (pos_y > 300) and (pos_y < 350):
                             selections.append('h4')
+                            cord.append(450)
+                            cord.append(300)
                         elif (pos_y > 350) and (pos_y < 400):
                             selections.append('h3')
+                            cord.append(450)
+                            cord.append(350)
                         elif (pos_y > 400) and (pos_y < 450):
                             selections.append('h2')
+                            cord.append(450)
+                            cord.append(400)
                         elif (pos_y > 450):
                             selections.append ('h1')
-
-                 
+                            cord.append(450)
+                            cord.append(450)
+            
+            if len(selections) == 1:
+                if ind == True:
+                    print('cause')
+                    display.indication(cord)
+                    ind = False
                     
 
                     
